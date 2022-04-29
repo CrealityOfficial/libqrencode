@@ -110,58 +110,19 @@ set(QRENCODE_HDRS qrencode_inner.h
 if(MSVC)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 endif()
-__add_real_target(libqrencode dll SOURCE ${QRENCODE_SRCS} ${QRENCODE_HDRS} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
-#    set_target_properties(qrencode PROPERTIES VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH} SOVERSION ${PROJECT_VERSION_MAJOR})
 
+set(LIBS)
+set(DEFS STATIC_IN_RELEASE=static)
 if(CMAKE_USE_PTHREADS_INIT)
-    target_link_libraries(libqrencode Threads::Threads)
+    list(APPEND LIBS Threads::Threads)
 endif()
 
-# include(GNUInstallDirs)
-# set(prefix "${CMAKE_INSTALL_PREFIX}")
-# set(exec_prefix "${CMAKE_INSTALL_FULL_BINDIR}")
-# set(libdir "${CMAKE_INSTALL_FULL_LIBDIR}")
-# set(includedir "${CMAKE_INSTALL_FULL_INCLUDEDIR}")
-# set(VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
-# 
-# configure_file(qrencode.1.in qrencode.1 @ONLY)
-# configure_file(libqrencode.pc.in libqrencode.pc @ONLY)
-# 
-# install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qrencode.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1)
-# install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libqrencode.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
-# install(FILES qrencode.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-# install(TARGETS qrencode DESTINATION ${CMAKE_INSTALL_LIBDIR})
-# 
-# ## Build utility tools
-# if(WITH_TOOLS)
-#     if(NOT WITHOUT_PNG)
-#         add_definitions(-DHAVE_PNG=1)
-#     endif()
-#     add_executable(qrenc qrenc.c)
-#     set_target_properties(qrenc PROPERTIES OUTPUT_NAME qrencode)
-# 
-#     if(NOT WITHOUT_PNG)
-#         target_link_libraries(qrenc qrencode PNG::PNG)
-#     else()
-#         target_link_libraries(qrenc qrencode)
-#     endif()
-# 
-#     if(MSVC)
-#         target_link_libraries(qrenc ${GETOPT_LIBRARIES})
-#     endif(MSVC)
-# 
-#     install(TARGETS qrenc DESTINATION ${CMAKE_INSTALL_BINDIR})
-# endif()
-# 
-# if(WITH_TESTS)
-#     enable_testing()
-#     add_definitions(-DWITH_TESTS=)
-#     add_definitions(-DSTATIC_IN_RELEASE=)
-#     add_subdirectory(tests)
-# else()
-     add_definitions(-DSTATIC_IN_RELEASE=static)
-# endif()
-
+__add_real_target(libqrencode dll SOURCE ${QRENCODE_SRCS} ${QRENCODE_HDRS}
+								  LIB ${LIBS}
+								  DEF ${DEFS}
+								  INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
+								  )
+								  
 ## ==============================================================================
 ##
 ##  Configuration summary
