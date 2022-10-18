@@ -115,6 +115,10 @@ set(LIBS)
 set(DEFS STATIC_IN_RELEASE=static)
 if(CMAKE_USE_PTHREADS_INIT)
     list(APPEND LIBS Threads::Threads)
+	if(CC_BC_WIN)
+		list(APPEND LIBS pthread.lib)
+		list(APPEND DEFS PTW32_STATIC_LIB)
+	endif()
 endif()
 
 __add_real_target(libqrencode dll SOURCE ${QRENCODE_SRCS} ${QRENCODE_HDRS}
