@@ -126,7 +126,11 @@ __add_real_target(libqrencode dll SOURCE ${QRENCODE_SRCS} ${QRENCODE_HDRS}
 								  DEF ${DEFS}
 								  INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
 								  )
-								  
+		
+if(CC_INSTALL_LIBQRENCODE)
+	__install_directory_specif(${CMAKE_CURRENT_SOURCE_DIR}/ libqrencode)
+endif()
+		
 ## ==============================================================================
 ##
 ##  Configuration summary
