@@ -121,7 +121,7 @@ if(CMAKE_USE_PTHREADS_INIT)
 	endif()
 endif()
 
-__add_real_target(libqrencode lib SOURCE ${QRENCODE_SRCS} ${QRENCODE_HDRS}
+__add_real_target(libqrencode_static lib SOURCE ${QRENCODE_SRCS} ${QRENCODE_HDRS}
 								  LIB ${LIBS}
 								  DEF ${DEFS}
 								  INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
